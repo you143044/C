@@ -1,0 +1,624 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f0f1a 100%);
+    min-height: 100vh;
+    color: #e0e0e0;
+    overflow-x: hidden;
+}
+
+/* 页面切换 */
+.page {
+    display: none;
+    min-height: 100vh;
+}
+
+.page.active {
+    display: block;
+}
+
+/* 武器选择页面 */
+#weapon-selection {
+    padding: 40px;
+}
+
+.selection-header {
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.selection-header h1 {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: #fff;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    text-shadow: 0 0 20px rgba(100, 200, 255, 0.3);
+}
+
+.weapon-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 30px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.weapon-card {
+    background: linear-gradient(145deg, #2a2a4a 0%, #1a1a2e 100%);
+    border: 1px solid #3a3a5a;
+    border-radius: 8px;
+    padding: 20px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.weapon-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(100, 200, 255, 0.1), transparent);
+    transition: left 0.5s ease;
+}
+
+.weapon-card:hover {
+    transform: translateY(-5px);
+    border-color: #64c8ff;
+    box-shadow: 0 10px 30px rgba(100, 200, 255, 0.2);
+}
+
+.weapon-card:hover::before {
+    left: 100%;
+}
+
+.weapon-card-image {
+    width: 100%;
+    height: 160px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 15px;
+    background: rgba(0, 0, 0, 0.3);
+    border-radius: 4px;
+}
+
+.weapon-card-image svg {
+    max-width: 90%;
+    max-height: 90%;
+    filter: drop-shadow(0 5px 15px rgba(0, 0, 0, 0.5));
+}
+
+.weapon-card-info h3 {
+    font-size: 1.3rem;
+    color: #fff;
+    margin-bottom: 5px;
+}
+
+.weapon-card-info span {
+    font-size: 0.9rem;
+    color: #888;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.selection-footer {
+    text-align: center;
+    margin-top: 40px;
+}
+
+/* 枪械改装页面 */
+#gunsmith-page {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+.gunsmith-layout {
+    display: flex;
+    flex: 1;
+    padding: 20px;
+    gap: 20px;
+}
+
+/* 左侧预览区 */
+.preview-section {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    background: linear-gradient(145deg, #1e1e3a 0%, #151525 100%);
+    border: 1px solid #2a2a4a;
+    border-radius: 8px;
+    padding: 30px;
+    position: relative;
+    overflow: hidden;
+}
+
+.preview-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: 
+        linear-gradient(90deg, rgba(100, 200, 255, 0.03) 1px, transparent 1px),
+        linear-gradient(rgba(100, 200, 255, 0.03) 1px, transparent 1px);
+    background-size: 40px 40px;
+    pointer-events: none;
+}
+
+.gun-display {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 300px;
+    position: relative;
+}
+
+.gun-display svg {
+    max-width: 100%;
+    max-height: 100%;
+    filter: drop-shadow(0 10px 30px rgba(0, 0, 0, 0.8));
+}
+
+/* 配件槽位 */
+.attachment-slots {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    pointer-events: none;
+}
+
+.slot-container {
+    position: absolute;
+    pointer-events: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+}
+
+.slot-box {
+    width: 60px;
+    height: 40px;
+    background: linear-gradient(145deg, #2a2a4a, #1a1a2e);
+    border: 2px solid #4a4a6a;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+}
+
+.slot-box:hover {
+    border-color: #64c8ff;
+    box-shadow: 0 0 15px rgba(100, 200, 255, 0.4);
+}
+
+.slot-box::after {
+    content: '+';
+    font-size: 20px;
+    color: #64c8ff;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.slot-box:hover::after {
+    opacity: 1;
+}
+
+.slot-box.has-attachment {
+    background: linear-gradient(145deg, #3a3a5a, #2a2a4a);
+    border-color: #64c8ff;
+}
+
+.slot-box.has-attachment::after {
+    content: '✓';
+    font-size: 16px;
+    opacity: 1;
+}
+
+.slot-label {
+    font-size: 11px;
+    color: #aaa;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    text-align: center;
+    background: rgba(0, 0, 0, 0.6);
+    padding: 2px 8px;
+    border-radius: 2px;
+}
+
+/* 连接线 */
+.slot-line {
+    position: absolute;
+    background: linear-gradient(90deg, transparent, #4a4a6a, #4a4a6a, transparent);
+    height: 2px;
+    pointer-events: none;
+}
+
+.slot-line.vertical {
+    width: 2px;
+    height: auto;
+    background: linear-gradient(180deg, transparent, #4a4a6a, #4a4a6a, transparent);
+}
+
+/* 右侧属性面板 */
+.stats-panel {
+    width: 320px;
+    background: linear-gradient(145deg, #1e1e3a 0%, #151525 100%);
+    border: 1px solid #2a2a4a;
+    border-radius: 8px;
+    padding: 25px;
+    display: flex;
+    flex-direction: column;
+}
+
+.weapon-info {
+    text-align: center;
+    margin-bottom: 30px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid #2a2a4a;
+}
+
+.weapon-info h2 {
+    font-size: 1.8rem;
+    color: #fff;
+    margin-bottom: 5px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
+.weapon-category {
+    font-size: 0.85rem;
+    color: #64c8ff;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
+.stats-container {
+    flex: 1;
+}
+
+.stat-row {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+    gap: 10px;
+}
+
+.stat-name {
+    width: 50px;
+    font-size: 0.85rem;
+    color: #aaa;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.stat-bar-container {
+    flex: 1;
+    position: relative;
+    height: 20px;
+}
+
+.stat-bar {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: #1a1a2e;
+    border: 1px solid #2a2a4a;
+    border-radius: 2px;
+    overflow: hidden;
+}
+
+.stat-bar-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #4a4a6a, #6a6a8a);
+    transition: width 0.3s ease;
+}
+
+.stat-bar-change {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    transition: width 0.3s ease, background 0.3s ease;
+    border-radius: 0 2px 2px 0;
+}
+
+.stat-bar-change.positive {
+    background: rgba(76, 175, 80, 0.6);
+}
+
+.stat-bar-change.negative {
+    background: rgba(244, 67, 54, 0.6);
+}
+
+.stat-value {
+    width: 30px;
+    text-align: right;
+    font-size: 1rem;
+    font-weight: 600;
+    color: #fff;
+}
+
+.stat-change {
+    width: 40px;
+    text-align: left;
+    font-size: 0.85rem;
+    font-weight: 600;
+}
+
+.stat-change.positive {
+    color: #4caf50;
+}
+
+.stat-change.negative {
+    color: #f44336;
+}
+
+/* 底部操作栏 */
+.action-bar {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    padding: 20px;
+    background: linear-gradient(180deg, transparent, rgba(0, 0, 0, 0.5));
+    border-top: 1px solid #2a2a4a;
+}
+
+.btn {
+    padding: 12px 30px;
+    font-size: 0.95rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.btn-primary {
+    background: linear-gradient(145deg, #64c8ff, #4a9fd4);
+    color: #1a1a2e;
+}
+
+.btn-primary:hover {
+    background: linear-gradient(145deg, #7ed4ff, #5aafea);
+    box-shadow: 0 5px 20px rgba(100, 200, 255, 0.4);
+}
+
+.btn-secondary {
+    background: linear-gradient(145deg, #3a3a5a, #2a2a4a);
+    color: #e0e0e0;
+    border: 1px solid #4a4a6a;
+}
+
+.btn-secondary:hover {
+    background: linear-gradient(145deg, #4a4a6a, #3a3a5a);
+    border-color: #64c8ff;
+}
+
+/* 模态框 */
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.8);
+    z-index: 1000;
+    align-items: center;
+    justify-content: center;
+}
+
+.modal.active {
+    display: flex;
+}
+
+.modal-content {
+    background: linear-gradient(145deg, #1e1e3a 0%, #151525 100%);
+    border: 1px solid #2a2a4a;
+    border-radius: 8px;
+    width: 90%;
+    max-width: 600px;
+    max-height: 80vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+    border-bottom: 1px solid #2a2a4a;
+}
+
+.modal-header h3 {
+    font-size: 1.3rem;
+    color: #fff;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.close-btn {
+    background: none;
+    border: none;
+    color: #aaa;
+    font-size: 1.5rem;
+    cursor: pointer;
+    transition: color 0.3s ease;
+}
+
+.close-btn:hover {
+    color: #fff;
+}
+
+.modal-body {
+    padding: 20px;
+    overflow-y: auto;
+}
+
+.attachment-option {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    padding: 15px;
+    background: linear-gradient(145deg, #2a2a4a, #1a1a2e);
+    border: 1px solid #3a3a5a;
+    border-radius: 4px;
+    margin-bottom: 10px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.attachment-option:hover {
+    border-color: #64c8ff;
+    box-shadow: 0 0 15px rgba(100, 200, 255, 0.2);
+}
+
+.attachment-option.selected {
+    border-color: #64c8ff;
+    background: linear-gradient(145deg, #3a3a5a, #2a2a4a);
+}
+
+.attachment-icon {
+    width: 50px;
+    height: 50px;
+    background: rgba(0, 0, 0, 0.3);
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.attachment-icon svg {
+    max-width: 40px;
+    max-height: 40px;
+}
+
+.attachment-info {
+    flex: 1;
+}
+
+.attachment-info h4 {
+    font-size: 1rem;
+    color: #fff;
+    margin-bottom: 5px;
+}
+
+.attachment-stats {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.attachment-stat {
+    font-size: 0.8rem;
+    padding: 2px 8px;
+    border-radius: 2px;
+}
+
+.attachment-stat.positive {
+    color: #4caf50;
+    background: rgba(76, 175, 80, 0.1);
+}
+
+.attachment-stat.negative {
+    color: #f44336;
+    background: rgba(244, 67, 54, 0.1);
+}
+
+.attachment-none {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    padding: 15px;
+    background: linear-gradient(145deg, #2a2a4a, #1a1a2e);
+    border: 1px dashed #3a3a5a;
+    border-radius: 4px;
+    margin-bottom: 15px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.attachment-none:hover {
+    border-color: #64c8ff;
+}
+
+.attachment-none .attachment-icon {
+    background: rgba(100, 200, 255, 0.1);
+}
+
+.attachment-none svg {
+    color: #64c8ff;
+}
+
+/* 滚动条样式 */
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: #1a1a2e;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #3a3a5a;
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #4a4a6a;
+}
+
+/* 响应式设计 */
+@media (max-width: 1024px) {
+    .gunsmith-layout {
+        flex-direction: column;
+    }
+    
+    .stats-panel {
+        width: 100%;
+    }
+}
+
+@media (max-width: 768px) {
+    .weapon-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .selection-header h1 {
+        font-size: 1.8rem;
+    }
+    
+    .action-bar {
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .btn {
+        width: 100%;
+        max-width: 300px;
+    }
+}

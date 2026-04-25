@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>枪械改装系统</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- 武器选择页面 -->
+    <div id="weapon-selection" class="page active">
+        <div class="selection-header">
+            <h1>选择武器</h1>
+        </div>
+        <div class="weapon-grid" id="weaponGrid">
+            <!-- 武器卡片将通过JS动态生成 -->
+        </div>
+        <div class="selection-footer">
+            <button class="btn btn-secondary" id="back-btn">返回</button>
+        </div>
+    </div>
+
+    <!-- 枪械改装页面 -->
+    <div id="gunsmith-page" class="page">
+        <div class="gunsmith-layout">
+            <!-- 左侧: 枪械预览和配件槽 -->
+            <div class="preview-section">
+                <div class="gun-display" id="gunDisplay">
+                    <!-- 枪械模型将通过JS动态生成 -->
+                </div>
+                
+                <!-- 配件连接线和插槽 -->
+                <div class="attachment-slots" id="attachmentSlots">
+                    <!-- 配件槽将通过JS动态生成 -->
+                </div>
+            </div>
+
+            <!-- 右侧: 属性面板 -->
+            <div class="stats-panel">
+                <div class="weapon-info">
+                    <h2 id="currentWeaponName">M4A1</h2>
+                    <span class="weapon-category">突击步枪</span>
+                </div>
+                
+                <div class="stats-container">
+                    <div class="stat-row">
+                        <span class="stat-name">伤害</span>
+                        <div class="stat-bar-container">
+                            <div class="stat-bar" id="stat-damage-base">
+                                <div class="stat-bar-fill" style="width: 70%"></div>
+                            </div>
+                            <div class="stat-bar-change" id="stat-damage-change"></div>
+                        </div>
+                        <span class="stat-value" id="stat-damage-value">70</span>
+                        <span class="stat-change" id="stat-damage-change-value"></span>
+                    </div>
+                    
+                    <div class="stat-row">
+                        <span class="stat-name">射速</span>
+                        <div class="stat-bar-container">
+                            <div class="stat-bar" id="stat-fireRate-base">
+                                <div class="stat-bar-fill" style="width: 85%"></div>
+                            </div>
+                            <div class="stat-bar-change" id="stat-fireRate-change"></div>
+                        </div>
+                        <span class="stat-value" id="stat-fireRate-value">85</span>
+                        <span class="stat-change" id="stat-fireRate-change-value"></span>
+                    </div>
+                    
+                    <div class="stat-row">
+                        <span class="stat-name">腰射</span>
+                        <div class="stat-bar-container">
+                            <div class="stat-bar" id="stat-hipFire-base">
+                                <div class="stat-bar-fill" style="width: 65%"></div>
+                            </div>
+                            <div class="stat-bar-change" id="stat-hipFire-change"></div>
+                        </div>
+                        <span class="stat-value" id="stat-hipFire-value">65</span>
+                        <span class="stat-change" id="stat-hipFire-change-value"></span>
+                    </div>
+                    
+                    <div class="stat-row">
+                        <span class="stat-name">精准</span>
+                        <div class="stat-bar-container">
+                            <div class="stat-bar" id="stat-accuracy-base">
+                                <div class="stat-bar-fill" style="width: 75%"></div>
+                            </div>
+                            <div class="stat-bar-change" id="stat-accuracy-change"></div>
+                        </div>
+                        <span class="stat-value" id="stat-accuracy-value">75</span>
+                        <span class="stat-change" id="stat-accuracy-change-value"></span>
+                    </div>
+                    
+                    <div class="stat-row">
+                        <span class="stat-name">控制</span>
+                        <div class="stat-bar-container">
+                            <div class="stat-bar" id="stat-control-base">
+                                <div class="stat-bar-fill" style="width: 70%"></div>
+                            </div>
+                            <div class="stat-bar-change" id="stat-control-change"></div>
+                        </div>
+                        <span class="stat-value" id="stat-control-value">70</span>
+                        <span class="stat-change" id="stat-control-change-value"></span>
+                    </div>
+                    
+                    <div class="stat-row">
+                        <span class="stat-name">机动</span>
+                        <div class="stat-bar-container">
+                            <div class="stat-bar" id="stat-mobility-base">
+                                <div class="stat-bar-fill" style="width: 60%"></div>
+                            </div>
+                            <div class="stat-bar-change" id="stat-mobility-change"></div>
+                        </div>
+                        <span class="stat-value" id="stat-mobility-value">60</span>
+                        <span class="stat-change" id="stat-mobility-change-value"></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 底部操作按钮 -->
+        <div class="action-bar">
+            <button class="btn btn-secondary" id="weapon-select-btn">武器选择</button>
+            <button class="btn btn-secondary" id="reset-btn">重置</button>
+            <button class="btn btn-primary" id="save-btn">保存配置</button>
+        </div>
+
+        <!-- 配件选择弹窗 -->
+        <div class="modal" id="attachmentModal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 id="modalTitle">选择配件</h3>
+                    <button class="close-btn" id="closeModal">&times;</button>
+                </div>
+                <div class="modal-body" id="modalBody">
+                    <!-- 配件列表将通过JS动态生成 -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
